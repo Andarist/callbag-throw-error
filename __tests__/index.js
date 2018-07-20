@@ -1,6 +1,7 @@
 import forEach from 'callbag-for-each'
 import pipe from 'callbag-pipe'
 import subscribe from 'callbag-subscribe'
+import tap from 'callbag-tap'
 
 import throwError from '../src'
 
@@ -52,4 +53,25 @@ test('should default to dummy error', () => {
   )
 
   expect(error).toBeInstanceOf(Error)
+})
+
+test('does not emit error if sink unsubscribes immediately', done => {
+  const fail = () => {
+    done.fail('This should not happen.')
+  }
+
+  const makeSink = () => source => {
+    source(0, (start, talkback) => {
+      if (start !== 0) return
+      talkback(2)
+    })
+  }
+
+  pipe(
+    throwError('err'),
+    tap(fail, fail, fail),
+    makeSink(),
+  )
+
+  done()
 })
