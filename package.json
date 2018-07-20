@@ -1,6 +1,6 @@
 {
   "name": "callbag-throw-error",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "👜 Callbag source factory that immediately emits an error.",
   "main": "dist/callbag-throw-error.js",
   "module": "dist/callbag-throw-error.esm.js",
